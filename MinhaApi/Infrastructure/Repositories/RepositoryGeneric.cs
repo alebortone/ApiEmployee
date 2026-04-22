@@ -30,7 +30,7 @@ public class RepositoryGeneric<T> : IRepositoryGeneric<T> where T : class
 
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(Guid id)
         {
             var entity = await GetById(id);
             if (entity != null)
@@ -39,12 +39,12 @@ public class RepositoryGeneric<T> : IRepositoryGeneric<T> where T : class
                 await context.SaveChangesAsync();
             }
         }
-        public async Task<T?> GetById(int id)
+        public async Task<T?> GetById(Guid id)
         {
             return await context.Set<T>().FindAsync(id);
         }
 
-        public async Task Update(T entity, int id)
+        public async Task Update(T entity, Guid id)
         {
             var entitie = await context.Set<T>().FindAsync(id);
             if (entitie == null)

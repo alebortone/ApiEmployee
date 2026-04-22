@@ -1,4 +1,5 @@
-﻿using MinhaApi.Application.Interfaces;
+﻿using MinhaApi.Application.DTOs;
+using MinhaApi.Application.Interfaces;
 using MinhaApi.Domain.employee.entitie;
 
 namespace MinhaApi.Application.UseCases.Employees.GetEmployees
@@ -12,9 +13,12 @@ namespace MinhaApi.Application.UseCases.Employees.GetEmployees
             _repo = repo;
         }
 
-        public async Task<List<Employee>> GetAll(GetEmployeesQuery query)
+        public async Task<List<EmployeeResponse>> GetAll(GetEmployeesQuery query)
         {
-            return await _repo.GetAll();
+            var employees =  await _repo.GetAll();
+
+            return EmployeeResponse.FromList(employees);
+        
         }
     }
 }

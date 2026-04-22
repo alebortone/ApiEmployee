@@ -18,8 +18,8 @@ public class LoginHandler
     {
         var employees = await _repository.GetAll();
         var employee = employees.FirstOrDefault(x =>
-            x.name.Equals(query.Name, StringComparison.OrdinalIgnoreCase) &&
-            x.age == query.Age);
+            x.Name.Equals(query.Name, StringComparison.OrdinalIgnoreCase) &&
+            x.Age == query.Age);
 
         if (employee == null) return null;
 

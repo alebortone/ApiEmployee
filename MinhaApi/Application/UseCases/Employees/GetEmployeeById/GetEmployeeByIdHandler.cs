@@ -1,4 +1,5 @@
-﻿using MinhaApi.Application.Interfaces;
+﻿using MinhaApi.Application.DTOs;
+using MinhaApi.Application.Interfaces;
 using MinhaApi.Domain.employee.entitie;
 
 namespace MinhaApi.Application.UseCases.Employees.GetEmployeeById
@@ -12,9 +13,14 @@ namespace MinhaApi.Application.UseCases.Employees.GetEmployeeById
             _repo = repo;
         }
 
-        public async Task<Employee?> GetById(GetEmployeeByIdQuery query)
+        public async Task<EmployeeResponse?> GetById(GetEmployeeByIdQuery query)
         {
-            return await _repo.GetById(query.Id);
+            var employee = await _repo.GetById(query.Id);
+
+            if (employee == null)
+                throw new Exception("Usuario não encontrado");
+
+            return EmployeeResponse.ToResponse(employee);
         }
     }
 }

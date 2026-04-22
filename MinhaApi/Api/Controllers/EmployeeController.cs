@@ -41,7 +41,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(int id)
+    public async Task<IActionResult> GetById(Guid id)
     {
         var result = await _getById.GetById(new GetEmployeeByIdQuery(id));
 
@@ -52,7 +52,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(Guid id)
     {
         await _delete.Delete(new DeleteEmployeeCommand(id));
         return NoContent();

@@ -10,13 +10,13 @@ namespace MinhaApi.Infrastructure.Repositories
         {
         }
 
-        public async Task<byte[]> GetPhotoBytesAsync(int id)
+        public async Task<byte[]> GetPhotoBytesAsync(Guid id)
         {
             var employee = await GetById(id);
-            if (employee == null || string.IsNullOrEmpty(employee.photo))
+            if (employee == null || string.IsNullOrEmpty(employee.Photo))
                 return null!;
 
-            return await File.ReadAllBytesAsync(employee.photo);
+            return await File.ReadAllBytesAsync(employee.Photo);
         }
 
     }

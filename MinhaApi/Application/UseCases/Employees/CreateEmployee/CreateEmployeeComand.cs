@@ -3,6 +3,9 @@
     public record CreateEmployeeCommand(
      string Name,
      int Age,
-     IFormFile? Photo
+     IFormFile? Photo,
+     string email,
+     string password
+
  );
 }

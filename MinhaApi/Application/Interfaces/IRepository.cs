@@ -4,8 +4,8 @@
     {
         Task Add(T entity);
         Task<List<T>> GetAll();
-        Task Delete(int id);
-        Task<T?> GetById(int id);
-        Task Update(T entity, int id);
+        Task Delete(Guid id);
+        Task<T?> GetById(Guid id);
+        Task Update(T entity, Guid id);
     }
 }

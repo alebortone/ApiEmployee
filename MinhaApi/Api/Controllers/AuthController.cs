@@ -5,14 +5,6 @@ using MinhaApi.Application.UseCases.Auth.Login;
 
 namespace MinhaApi.Api.Controllers
 {
-
-    public class LoginRequest
-    {
-        public  string Name { get; set; }
-        public  int Age { get; set; }
-    }
-
-
     [ApiController]
     [Route("api/v1/auth")]
     public class AuthController : ControllerBase
