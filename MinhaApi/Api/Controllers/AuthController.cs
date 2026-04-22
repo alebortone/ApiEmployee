@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MinhaApi.Application.Services;
+using MinhaApi.Application.UseCases.Auth.Login;
 
-namespace MinhaApi.Auth
+
+
+namespace MinhaApi.Api.Controllers
 {
 
     public class LoginRequest
@@ -15,18 +17,18 @@ namespace MinhaApi.Auth
     [Route("api/v1/auth")]
     public class AuthController : ControllerBase
     {
-        private readonly AuthService _authService;
+        private readonly LoginHandler _authLogin;
 
-        public AuthController(AuthService authService)
+        public AuthController(LoginHandler authLogin)
         {
-            _authService = authService;
+            _authLogin = authLogin;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] LoginRequest request) // Exemplo simples
+        public async Task<IActionResult> Login([FromBody] LoginCommand request) 
         {
             
-            var token = await _authService.Authenticate(request.Name, request.Age);
+            var token = await _authLogin.Handle(request);
 
             if (token == null)
                 return Unauthorized(new { message = "Nome ou Idade inválidos" });

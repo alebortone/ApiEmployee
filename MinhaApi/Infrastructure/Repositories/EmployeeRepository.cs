@@ -1,9 +1,8 @@
-﻿using MinhaApi.Domain.employee.entitie;
-using MinhaApi.Domain.employee.Interface;
-using MinhaApi.Infratruture.Data;
-using MinhaApi.Repository.RepositorioAbstrato;
+﻿using MinhaApi.Application.Interfaces;
+using MinhaApi.Domain.employee.entitie;
+using MinhaApi.Infrastructure.Data;
 
-namespace MinhaApi.Infratruture.Repositories
+namespace MinhaApi.Infrastructure.Repositories
 {
     public class EmployeeRepository : RepositoryGeneric<Employee>, IEmployeeRepository
     {

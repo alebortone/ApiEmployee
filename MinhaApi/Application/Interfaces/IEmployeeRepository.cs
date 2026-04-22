@@ -1,7 +1,6 @@
 ﻿using MinhaApi.Domain.employee.entitie;
-using MinhaApi.Repository.RepositorioAbstrato;
 
-namespace MinhaApi.Domain.employee.Interface
+namespace MinhaApi.Application.Interfaces
 {
     public interface IEmployeeRepository : IRepositoryGeneric<Employee>
     {

@@ -2,11 +2,16 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-using MinhaApi.Application.Services;
-using MinhaApi.Auth;
-using MinhaApi.Domain.employee.Interface;
-using MinhaApi.Infratruture.Data;
-using MinhaApi.Infratruture.Repositories;
+using MinhaApi.Application.Interfaces;
+using MinhaApi.Application.UseCases.Auth.Login;
+using MinhaApi.Application.UseCases.Employees.CreateEmployee;
+using MinhaApi.Application.UseCases.Employees.DeleteEmployee;
+using MinhaApi.Application.UseCases.Employees.GetEmployeeById;
+using MinhaApi.Application.UseCases.Employees.GetEmployees;
+using MinhaApi.Infrastructure.Data;
+using MinhaApi.Infrastructure.Repositories;
+using MinhaApi.Infrastructure.Security;
+using MinhaApi.Storage;
 using System.Text;
 
 
@@ -16,8 +21,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-builder.Services.AddScoped<EmployeeService>();
 builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<LoginHandler>();
+builder.Services.AddScoped<IFileStorage, LocalFileStorage>();
+builder.Services.AddScoped<CreateEmployeeHandler>();
+builder.Services.AddScoped<GetEmployeesHandler>();
+builder.Services.AddScoped<GetEmployeeByIdHandler>();
+builder.Services.AddScoped<DeleteEmployeeHandler>();
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>

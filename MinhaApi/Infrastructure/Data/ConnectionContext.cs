@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MinhaApi.Domain.employee.entitie;
 
-namespace MinhaApi.Infratruture.Data
+namespace MinhaApi.Infrastructure.Data
 {
     public class ConnectionContext: DbContext{
 

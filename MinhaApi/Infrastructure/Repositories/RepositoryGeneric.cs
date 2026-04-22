@@ -1,19 +1,13 @@
 ﻿using Microsoft.VisualBasic;
 using Microsoft.EntityFrameworkCore;
-using MinhaApi.Infratruture.Data;
-namespace MinhaApi.Repository.RepositorioAbstrato
-{
+using MinhaApi.Application.Interfaces;
+using MinhaApi.Infrastructure.Data;
 
-    public interface IRepositoryGeneric<T> where T : class
-    {
-        Task Add(T entity);
-        Task <List<T>> GetAll();
-        Task Delete(int id);
-        Task<T?> GetById(int id);
-        Task Update(T entity, int id);
-    }
 
-    public class RepositoryGeneric<T> : IRepositoryGeneric<T> where T : class
+
+
+
+public class RepositoryGeneric<T> : IRepositoryGeneric<T> where T : class
     {
         protected readonly ConnectionContext context;
 
@@ -63,4 +57,4 @@ namespace MinhaApi.Repository.RepositorioAbstrato
 
     }
    
-}
+

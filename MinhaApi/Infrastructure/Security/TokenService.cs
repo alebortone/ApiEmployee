@@ -1,12 +1,11 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using MinhaApi.Domain.employee.entitie;
-using MinhaApi.Domain.employee.Interface;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 
-namespace MinhaApi.Auth
+namespace MinhaApi.Infrastructure.Security
 {
     public class TokenService
     {
@@ -22,7 +21,7 @@ namespace MinhaApi.Auth
             var key = Encoding.ASCII.GetBytes(secret);
             var tokenConfig = new SecurityTokenDescriptor
             {
-                Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
+                Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim("employeeId", employee.id.ToString()),
                 }),
