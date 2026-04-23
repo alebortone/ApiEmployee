@@ -1,5 +1,8 @@
 ﻿
 
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Xml.Linq;
+
 namespace MinhaApi.Domain.employee.entitie
 {
 
@@ -17,8 +20,31 @@ namespace MinhaApi.Domain.employee.entitie
         public string Email { get; set; }
         public string Password { get; set; }
 
+        private void Validate(string name, int age, string email, string password)
+        {
+            if (string.IsNullOrWhiteSpace(name) || name.Length < 3)
+                throw new ArgumentException("Nome inválido");
+
+            if (age < 16)
+                throw new ArgumentException("Idade inválida");
+
+            if (string.IsNullOrWhiteSpace(email))
+                throw new ArgumentException("Email obrigatório");
+
+            if (string.IsNullOrWhiteSpace(password) || password.Length < 6)
+                throw new ArgumentException("Senha inválida");
+        }
+
+        public void ToUpdate(string name, string email, int age)
+        {
+            this.Name = name;
+            this.Email = email;
+            this.Age = age;
+        }
         public Employee(string name, int age, string photo, string email, string password )
         {
+            Validate(name, age, email, password);
+            
             Id = Guid.NewGuid();
             this.Name = name ?? throw new ArgumentNullException(nameof(name));
             this.Age = age;
@@ -27,6 +53,8 @@ namespace MinhaApi.Domain.employee.entitie
             this.Password = password;
 
         }
+
+
 
     }
 }

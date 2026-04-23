@@ -1,6 +1,6 @@
 ﻿namespace MinhaApi.Application.UseCases.Auth.Login
 {
-    public record LoginCommand(string Name, int Age)
+    public record LoginCommand(string Email, string Password)
     {
     }
 }

@@ -4,8 +4,8 @@
      string Name,
      int Age,
      IFormFile? Photo,
-     string email,
-     string password
+     string Email,
+     string Password
 
  );
 }

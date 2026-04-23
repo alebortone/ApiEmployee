@@ -1,6 +1,7 @@
 ﻿using MinhaApi.Application.Interfaces;
 using MinhaApi.Domain.employee.entitie;
 using MinhaApi.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace MinhaApi.Infrastructure.Repositories
 {
@@ -19,6 +20,18 @@ namespace MinhaApi.Infrastructure.Repositories
             return await File.ReadAllBytesAsync(employee.Photo);
         }
 
+        public async Task<Employee?> GetByEmail(string email)
+        {
+            return await context.Set<Employee>().FirstOrDefaultAsync(x => x.Email == email);
+
+        }
+
+        public async Task<bool> IsEmailAlreadyUse(string email, Guid? id)
+        {
+          
+           return await context.Set<Employee>().AnyAsync(x => x.Email == email && x.Id != id);
+
+        }
     }
 }
 

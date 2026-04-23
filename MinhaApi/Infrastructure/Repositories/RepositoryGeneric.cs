@@ -44,13 +44,8 @@ public class RepositoryGeneric<T> : IRepositoryGeneric<T> where T : class
             return await context.Set<T>().FindAsync(id);
         }
 
-        public async Task Update(T entity, Guid id)
+        public async Task Update(T entity)
         {
-            var entitie = await context.Set<T>().FindAsync(id);
-            if (entitie == null)
-                throw new Exception("Entidade não encontrada ou não existente");
-
-            // context.Entry(entitie).State = EntityState.Detached;
             context.Set<T>().Update(entity);
             await context.SaveChangesAsync();
         }

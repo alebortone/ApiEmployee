@@ -5,5 +5,7 @@ namespace MinhaApi.Application.Interfaces
     public interface IEmployeeRepository : IRepositoryGeneric<Employee>
     {
         Task<byte[]> GetPhotoBytesAsync(Guid id);
+        Task<Employee?> GetByEmail(string email);
+        Task<bool> IsEmailAlreadyUse(string email, Guid? id = null);
     }
 }

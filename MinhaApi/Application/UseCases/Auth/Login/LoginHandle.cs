@@ -16,14 +16,14 @@ public class LoginHandler
 
     public async Task<object?> Handle(LoginCommand query)
     {
-        var employees = await _repository.GetAll();
-        var employee = employees.FirstOrDefault(x =>
-            x.Name.Equals(query.Name, StringComparison.OrdinalIgnoreCase) &&
-            x.Age == query.Age);
-
+        var employee = await _repository.GetByEmail(query.Email);
+       
         if (employee == null) return null;
+        
+        if (!BCrypt.Net.BCrypt.Verify(query.Password, employee.Password))
+            return null;
 
-  
+
         return _tokenService.GenerateToken(employee);
     }
 }

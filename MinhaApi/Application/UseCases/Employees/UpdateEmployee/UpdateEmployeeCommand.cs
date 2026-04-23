@@ -2,7 +2,7 @@
 
 namespace MinhaApi.Application.UseCases.Employees.UpdateEmployee
 {
-    public record UpdateEmployeeCommand(Employee employee, int id)
+    public record UpdateEmployeeCommand(string name, int age, string email, Guid id)
     {
     }
 }

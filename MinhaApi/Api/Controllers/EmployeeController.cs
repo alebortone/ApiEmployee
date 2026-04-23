@@ -3,6 +3,8 @@ using MinhaApi.Application.UseCases.Employees.CreateEmployee;
 using MinhaApi.Application.UseCases.Employees.DeleteEmployee;
 using MinhaApi.Application.UseCases.Employees.GetEmployeeById;
 using MinhaApi.Application.UseCases.Employees.GetEmployees;
+using MinhaApi.Application.UseCases.Employees.UpdateEmployee;
+using MinhaApi.Domain.employee.entitie;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -12,18 +14,21 @@ public class EmployeeController : ControllerBase
     private readonly GetEmployeesHandler _getAll;
     private readonly GetEmployeeByIdHandler _getById;
     private readonly DeleteEmployeeHandler _delete;
+    private readonly UpdateEmployeeHandle _update;
 
     public EmployeeController(
         CreateEmployeeHandler create,
         GetEmployeesHandler getAll,
         GetEmployeeByIdHandler getById,
-        DeleteEmployeeHandler delete
+        DeleteEmployeeHandler delete,
+        UpdateEmployeeHandle update
     )
     {
         _create = create;
         _getAll = getAll;
         _getById = getById;
         _delete = delete;
+        _update = update;
     }
 
     [HttpPost]
@@ -56,5 +61,12 @@ public class EmployeeController : ControllerBase
     {
         await _delete.Delete(new DeleteEmployeeCommand(id));
         return NoContent();
+    }
+    
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update([FromBody] UpdateEmployeeCommand command)
+    {
+        var result = await _update.Update(command);
+        return Ok(result);
     }
 }

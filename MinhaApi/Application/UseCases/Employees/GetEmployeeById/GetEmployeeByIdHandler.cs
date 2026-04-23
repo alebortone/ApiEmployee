@@ -1,6 +1,5 @@
 ﻿using MinhaApi.Application.DTOs;
 using MinhaApi.Application.Interfaces;
-using MinhaApi.Domain.employee.entitie;
 
 namespace MinhaApi.Application.UseCases.Employees.GetEmployeeById
 {

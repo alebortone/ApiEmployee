@@ -1,17 +1,18 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi;
 using MinhaApi.Application.Interfaces;
 using MinhaApi.Application.UseCases.Auth.Login;
 using MinhaApi.Application.UseCases.Employees.CreateEmployee;
 using MinhaApi.Application.UseCases.Employees.DeleteEmployee;
 using MinhaApi.Application.UseCases.Employees.GetEmployeeById;
 using MinhaApi.Application.UseCases.Employees.GetEmployees;
+using MinhaApi.Application.UseCases.Employees.UpdateEmployee;
 using MinhaApi.Infrastructure.Data;
 using MinhaApi.Infrastructure.Repositories;
 using MinhaApi.Infrastructure.Security;
-using MinhaApi.Storage;
 using System.Text;
 
 
@@ -23,11 +24,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<LoginHandler>();
-builder.Services.AddScoped<IFileStorage, LocalFileStorage>();
+builder.Services.AddScoped<IFileStorage, FileStorageRepository>();
 builder.Services.AddScoped<CreateEmployeeHandler>();
 builder.Services.AddScoped<GetEmployeesHandler>();
 builder.Services.AddScoped<GetEmployeeByIdHandler>();
 builder.Services.AddScoped<DeleteEmployeeHandler>();
+builder.Services.AddScoped<UpdateEmployeeHandle>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateEmployeeValidator>();
+builder.Services.AddFluentValidationAutoValidation();
 
 builder.Services.AddCors(options =>
 {
