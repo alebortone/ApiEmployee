@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using MinhaApi.Email.App;
+using MinhaApi.Email.Service;
 using MinhaApi.Infrastructure.Data;
 using MinhaApi.Infrastructure.Repositories;
 using MinhaApi.Infrastructure.Security;
-using MinhaApi.Pdf.Interface;
 using MinhaApi.Pdf.Service;
 using MinhaAPI.Aplication.Interfaces;
 using MinhaAPI.Aplication.UseCases.Auth.Login;
@@ -71,8 +72,11 @@ builder.Services.AddScoped<UpdateEmployeeHandle>();
 builder.Services.AddScoped<GetEmployeePhotoHandler>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateEmployeeValidator>();
 builder.Services.AddFluentValidationAutoValidation();
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection("EmailSettings"));
 
 builder.Services.AddCors(options =>
 {

@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MinhaApi.Pdf.Interface;
+
 using MinhaAPI.Aplication.UseCases.Employees.CreateEmployee;
 using MinhaAPI.Aplication.UseCases.Employees.DeleteEmployee;
 using MinhaAPI.Aplication.UseCases.Employees.GetEmployeeById;
 using MinhaAPI.Aplication.UseCases.Employees.GetEmployees;
 using MinhaAPI.Aplication.UseCases.Employees.GetPhotoEmployee;
 using MinhaAPI.Aplication.UseCases.Employees.UpdateEmployee;
-using MinhaApi.Pdf.PdfModel;
+
+using MinhaApi.Email;
+using MinhaAPI.Aplication.UseCases.Employees.GetPdfEmployee;
 
 //[Authorize]
 [ApiController]
@@ -20,7 +22,7 @@ public class EmployeeController : ControllerBase
     private readonly DeleteEmployeeHandler _delete;
     private readonly UpdateEmployeeHandle _update;
     private readonly GetEmployeePhotoHandler _getPhoto;
-    private readonly IPdfService _pdfService;
+    private readonly GetPdfEmployeeHandler _getPdf;
 
     public EmployeeController(
         CreateEmployeeHandler create,
@@ -29,7 +31,8 @@ public class EmployeeController : ControllerBase
         DeleteEmployeeHandler delete,
         UpdateEmployeeHandle update,
         GetEmployeePhotoHandler getPhoto,
-        IPdfService pdfService
+        GetPdfEmployeeHandler getPdf
+          
     )
     {
         _create = create;
@@ -38,7 +41,7 @@ public class EmployeeController : ControllerBase
         _delete = delete;
         _update = update;
         _getPhoto = getPhoto;
-        _pdfService = pdfService;
+        _getPdf = getPdf;
     }
 
     [HttpPost]
@@ -93,12 +96,9 @@ public class EmployeeController : ControllerBase
     [HttpGet("{id}/pdf")]
     public async Task<IActionResult> GetPdf(Guid id)
     {
-        var result = await _getById.Handle(new GetEmployeeByIdQuery(id));
-        var photoEmployee = await _getPhoto.Handle(new GetEmployeePhotoQuery(id));
+        var pdf = await _getPdf.Handler(new GetPdfEmployeeQuery(id));
 
-        var pdf = _pdfService.GerarPdf(new EmployeePdfModel(result.Name, result.Age, photoEmployee));
-
-        return File(pdf, "application/pdf", $"funcionario{result.Name}.pdf");
+        return File(pdf, "application/pdf", $"funcionario.pdf");
 
     }
 }

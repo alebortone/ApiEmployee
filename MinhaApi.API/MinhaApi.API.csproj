@@ -19,6 +19,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\MinhaAPI.Aplication\MinhaAPI.Aplication.csproj" />
+		<ProjectReference Include="..\MinhaApi.Email\MinhaApi.Email.csproj" />
 		<ProjectReference Include="..\MinhaApi.Infrastructure\MinhaApi.Infrastructure.csproj" />
 		<ProjectReference Include="..\MinhaApi.Pdf\MinhaApi.Pdf.csproj" />
 	</ItemGroup>

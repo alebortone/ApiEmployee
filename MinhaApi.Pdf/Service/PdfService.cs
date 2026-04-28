@@ -1,6 +1,5 @@
-﻿
-using MinhaApi.Pdf.Interface;
-using MinhaApi.Pdf.PdfModel;
+﻿using MinhaAPI.Aplication.DTOs;
+using MinhaAPI.Aplication.Interfaces;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
