@@ -10,12 +10,14 @@ using MinhaApi.Infrastructure.Data;
 using MinhaApi.Infrastructure.Repositories;
 using MinhaApi.Infrastructure.Security;
 using MinhaApi.Pdf.Service;
+using MinhaApi.Scheduler;
 using MinhaAPI.Aplication.Interfaces;
 using MinhaAPI.Aplication.UseCases.Auth.Login;
 using MinhaAPI.Aplication.UseCases.Employees.CreateEmployee;
 using MinhaAPI.Aplication.UseCases.Employees.DeleteEmployee;
 using MinhaAPI.Aplication.UseCases.Employees.GetEmployeeById;
 using MinhaAPI.Aplication.UseCases.Employees.GetEmployees;
+using MinhaAPI.Aplication.UseCases.Employees.GetPdfEmployee;
 using MinhaAPI.Aplication.UseCases.Employees.GetPhotoEmployee;
 using MinhaAPI.Aplication.UseCases.Employees.UpdateEmployee;
 using QuestPDF.Infrastructure;
@@ -74,7 +76,9 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateEmployeeValidator>();
+builder.Services.AddHostedService<SchedulerService>();
 builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddScoped<GetPdfEmployeeHandler>();
 builder.Services.Configure<EmailSettings>(
     builder.Configuration.GetSection("EmailSettings"));
 

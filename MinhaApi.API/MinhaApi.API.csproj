@@ -22,6 +22,7 @@
 		<ProjectReference Include="..\MinhaApi.Email\MinhaApi.Email.csproj" />
 		<ProjectReference Include="..\MinhaApi.Infrastructure\MinhaApi.Infrastructure.csproj" />
 		<ProjectReference Include="..\MinhaApi.Pdf\MinhaApi.Pdf.csproj" />
+		<ProjectReference Include="..\MinhaApi.Scheduler\MinhaApi.Scheduler.csproj" />
 	</ItemGroup>
 
 </Project>

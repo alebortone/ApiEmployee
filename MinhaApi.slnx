@@ -5,4 +5,5 @@
   <Project Path="MinhaApi.Email/MinhaApi.Email.csproj" Id="32af0519-dd9d-4ce8-a441-5659c3d6231b" />
   <Project Path="MinhaApi.Infrastructure/MinhaApi.Infrastructure.csproj" Id="7b950057-62f3-46bf-8621-98eeefb2c88e" />
   <Project Path="MinhaApi.Pdf/MinhaApi.Pdf.csproj" />
+  <Project Path="MinhaApi.Scheduler/MinhaApi.Scheduler.csproj" Id="50961e5a-7932-4f30-84a5-2679ccc2fb91" />
 </Solution>
