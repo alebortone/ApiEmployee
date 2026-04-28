@@ -1,3 +1,7 @@
 <Solution>
-  <Project Path="MinhaApi/MinhaApi.csproj" />
+  <Project Path="MinhaApi.API/MinhaApi.API.csproj" Id="b1b89844-12a7-42b3-958f-9b50092354cb" />
+  <Project Path="MinhaAPI.Aplication/MinhaAPI.Aplication.csproj" Id="05e5f18a-4437-4f16-b17e-542be3135f1c" />
+  <Project Path="MinhaApi.Domain/MinhaApi.Domain.csproj" Id="74d7d6d2-6ec2-4759-b515-dd8fbec444b3" />
+  <Project Path="MinhaApi.Infrastructure/MinhaApi.Infrastructure.csproj" Id="7b950057-62f3-46bf-8621-98eeefb2c88e" />
+  <Project Path="MinhaApi.Pdf/MinhaApi.Pdf.csproj" />
 </Solution>

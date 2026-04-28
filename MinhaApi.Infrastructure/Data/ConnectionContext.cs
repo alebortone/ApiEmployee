@@ -1,0 +1,23 @@
+﻿using Microsoft.EntityFrameworkCore;
+using MinhaApi.Domain.employee.entitie;
+
+namespace MinhaApi.Infrastructure.Data
+{
+    public class ConnectionContext : DbContext
+    {
+        public ConnectionContext(DbContextOptions<ConnectionContext> options) : base(options)
+        {
+        }
+
+        public DbSet<Employee> Employees { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(
+                typeof(ConnectionContext).Assembly
+            );
+
+            base.OnModelCreating(modelBuilder);
+        }
+    }
+}
