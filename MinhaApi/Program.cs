@@ -3,12 +3,14 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 using MinhaApi.Application.Interfaces;
 using MinhaApi.Application.UseCases.Auth.Login;
 using MinhaApi.Application.UseCases.Employees.CreateEmployee;
 using MinhaApi.Application.UseCases.Employees.DeleteEmployee;
 using MinhaApi.Application.UseCases.Employees.GetEmployeeById;
 using MinhaApi.Application.UseCases.Employees.GetEmployees;
+using MinhaApi.Application.UseCases.Employees.GetPhotoEmployee;
 using MinhaApi.Application.UseCases.Employees.UpdateEmployee;
 using MinhaApi.Infrastructure.Data;
 using MinhaApi.Infrastructure.Repositories;
@@ -20,7 +22,39 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(options =>
+{
+ 
+
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "MG Health HIS Api",
+
+        Description = "This Api is part of MG Health HIS.",
+
+        Contact = new OpenApiContact { Name = "<MG/> CODE" }
+    });
+
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+
+        Type = SecuritySchemeType.ApiKey,
+
+        Scheme = "Bearer",
+
+        BearerFormat = "JWT",
+
+        In = ParameterLocation.Header,
+
+        Description = "JWT Authorization header using the Bearer scheme"
+    });
+
+    //options.EnableAnnotations();
+
+});
+
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<LoginHandler>();
@@ -30,6 +64,7 @@ builder.Services.AddScoped<GetEmployeesHandler>();
 builder.Services.AddScoped<GetEmployeeByIdHandler>();
 builder.Services.AddScoped<DeleteEmployeeHandler>();
 builder.Services.AddScoped<UpdateEmployeeHandle>();
+builder.Services.AddScoped<GetEmployeePhotoHandler>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateEmployeeValidator>();
 builder.Services.AddFluentValidationAutoValidation();
 

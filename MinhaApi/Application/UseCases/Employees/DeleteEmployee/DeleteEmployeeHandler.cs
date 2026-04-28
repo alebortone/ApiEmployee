@@ -11,7 +11,7 @@ namespace MinhaApi.Application.UseCases.Employees.DeleteEmployee
             _repo = repo;
         }
 
-        public async Task Delete(DeleteEmployeeCommand command)
+        public async Task Handle(DeleteEmployeeCommand command)
         {
             await _repo.Delete(command.Id);
         }

@@ -1,11 +1,11 @@
 ﻿namespace MinhaApi.Application.UseCases.Employees.CreateEmployee
 {
     public record CreateEmployeeCommand(
-     string Name,
-     int Age,
-     IFormFile? Photo,
-     string Email,
-     string Password
+     string name,
+     int age,
+     IFormFile? photo,
+     string email,
+     string password
 
  );
 }

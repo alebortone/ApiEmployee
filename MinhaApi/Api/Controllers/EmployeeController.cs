@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MinhaApi.Application.UseCases.Employees.CreateEmployee;
 using MinhaApi.Application.UseCases.Employees.DeleteEmployee;
 using MinhaApi.Application.UseCases.Employees.GetEmployeeById;
 using MinhaApi.Application.UseCases.Employees.GetEmployees;
+using MinhaApi.Application.UseCases.Employees.GetPhotoEmployee;
 using MinhaApi.Application.UseCases.Employees.UpdateEmployee;
-using MinhaApi.Domain.employee.entitie;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class EmployeeController : ControllerBase
@@ -15,13 +17,15 @@ public class EmployeeController : ControllerBase
     private readonly GetEmployeeByIdHandler _getById;
     private readonly DeleteEmployeeHandler _delete;
     private readonly UpdateEmployeeHandle _update;
+    private readonly GetEmployeePhotoHandler _getPhoto;
 
     public EmployeeController(
         CreateEmployeeHandler create,
         GetEmployeesHandler getAll,
         GetEmployeeByIdHandler getById,
         DeleteEmployeeHandler delete,
-        UpdateEmployeeHandle update
+        UpdateEmployeeHandle update,
+        GetEmployeePhotoHandler getPhoto
     )
     {
         _create = create;
@@ -29,26 +33,27 @@ public class EmployeeController : ControllerBase
         _getById = getById;
         _delete = delete;
         _update = update;
+        _getPhoto = getPhoto;
     }
 
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] CreateEmployeeCommand command)
     {
-        var result = await _create.Create(command);
+        var result = await _create.Handle(command);
         return Ok(result);
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var result = await _getAll.GetAll(new GetEmployeesQuery());
+        var result = await _getAll.Handle(new GetEmployeesQuery());
         return Ok(result);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
-        var result = await _getById.GetById(new GetEmployeeByIdQuery(id));
+        var result = await _getById.Handle(new GetEmployeeByIdQuery(id));
 
         if (result == null)
             return NotFound();
@@ -59,14 +64,24 @@ public class EmployeeController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        await _delete.Delete(new DeleteEmployeeCommand(id));
+        await _delete.Handle(new DeleteEmployeeCommand(id));
         return NoContent();
     }
     
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update([FromBody] UpdateEmployeeCommand command)
+    public async Task<IActionResult> Update([FromBody] UpdateEmployeeCommand command, Guid id)
     {
-        var result = await _update.Update(command);
+        var result = await _update.Handle(command, id);
         return Ok(result);
+    }
+
+    [HttpGet("{id}/photo")]
+    public async Task<IActionResult> GetPhoto(Guid id)
+    {
+        var result = await _getPhoto.Handle(new GetEmployeePhotoQuery(id));
+        if (result == null)
+            return NoContent();
+
+        return File(result, "image/jpeg");
     }
 }

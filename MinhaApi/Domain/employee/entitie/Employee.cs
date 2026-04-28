@@ -17,8 +17,8 @@ namespace MinhaApi.Domain.employee.entitie
 
         public string? Photo { get; private set; }
 
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public string Email { get; private set; }
+        public string Password { get; private set; }
 
         private void Validate(string name, int age, string email, string password)
         {

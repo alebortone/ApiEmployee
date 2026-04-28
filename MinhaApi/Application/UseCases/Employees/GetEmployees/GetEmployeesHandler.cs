@@ -13,7 +13,7 @@ namespace MinhaApi.Application.UseCases.Employees.GetEmployees
             _repo = repo;
         }
 
-        public async Task<List<EmployeeResponse>> GetAll(GetEmployeesQuery query)
+        public async Task<List<EmployeeResponse>> Handle(GetEmployeesQuery query)
         {
             var employees =  await _repo.GetAll();
 

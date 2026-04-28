@@ -20,21 +20,21 @@ namespace MinhaApi.Application.UseCases.Employees.CreateEmployee
             _fileStorage = fileStorage;
         }
 
-        public async Task<EmployeeResponse> Create(CreateEmployeeCommand command)
+        public async Task<EmployeeResponse> Handle(CreateEmployeeCommand command)
         {
-            if (await _repo.IsEmailAlreadyUse(command.Email))
+            if (await _repo.IsEmailAlreadyUse(command.email))
                 throw new Exception("Email ja cadastrado no sistema");    
 
             string? filePath = null;
 
-            if (command.Photo != null)
+            if (command.photo != null)
             {
-                filePath = await _fileStorage.SaveFileAsync(command.Photo);
+                filePath = await _fileStorage.SaveFileAsync(command.photo);
             }
 
-            var passwordHash = BCrypt.Net.BCrypt.HashPassword(command.Password);
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(command.password);
 
-            var employee = new Employee(command.Name, command.Age, filePath, command.Email, passwordHash);
+            var employee = new Employee(command.name, command.age, filePath, command.email, passwordHash);
 
             await _repo.Add(employee);
 

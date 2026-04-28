@@ -12,7 +12,7 @@ namespace MinhaApi.Application.UseCases.Employees.GetEmployeeById
             _repo = repo;
         }
 
-        public async Task<EmployeeResponse?> GetById(GetEmployeeByIdQuery query)
+        public async Task<EmployeeResponse?> Handle(GetEmployeeByIdQuery query)
         {
             var employee = await _repo.GetById(query.Id);
 

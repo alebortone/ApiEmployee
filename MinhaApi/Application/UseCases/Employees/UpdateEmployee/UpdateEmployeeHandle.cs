@@ -13,12 +13,12 @@ namespace MinhaApi.Application.UseCases.Employees.UpdateEmployee
             _repo = repo;
         }
 
-        public async Task<EmployeeResponse> Update(UpdateEmployeeCommand command)
+        public async Task<EmployeeResponse> Handle(UpdateEmployeeCommand command, Guid id)
         {
-            if (await _repo.IsEmailAlreadyUse(command.email, command.id))
+            if (await _repo.IsEmailAlreadyUse(command.email, id))
                 throw new Exception("Email ja foi cadastrado no sistema!");
             
-            var employee = await _repo.GetById(command.id);
+            var employee = await _repo.GetById(id);
             
             if (employee == null)
             {

@@ -11,15 +11,6 @@ namespace MinhaApi.Infrastructure.Repositories
         {
         }
 
-        public async Task<byte[]> GetPhotoBytesAsync(Guid id)
-        {
-            var employee = await GetById(id);
-            if (employee == null || string.IsNullOrEmpty(employee.Photo))
-                return null!;
-
-            return await File.ReadAllBytesAsync(employee.Photo);
-        }
-
         public async Task<Employee?> GetByEmail(string email)
         {
             return await context.Set<Employee>().FirstOrDefaultAsync(x => x.Email == email);

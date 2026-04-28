@@ -4,9 +4,6 @@ using MinhaApi.Application.Interfaces;
 using MinhaApi.Infrastructure.Data;
 
 
-
-
-
 public class RepositoryGeneric<T> : IRepositoryGeneric<T> where T : class
     {
         protected readonly ConnectionContext context;

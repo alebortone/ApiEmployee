@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
 
-namespace MinhaApi.Application.UseCases.Employees.CreateEmployee
+namespace MinhaApi.Application.UseCases.Employees.UpdateEmployee
 {
-    public class CreateEmployeeValidator : AbstractValidator<CreateEmployeeCommand>
+    public class UpdateEmployeeValidator : AbstractValidator<UpdateEmployeeCommand>
     {
-        public CreateEmployeeValidator()
+
+        public UpdateEmployeeValidator() 
         {
             RuleFor(x => x.name)
                 .NotEmpty()
@@ -16,9 +17,6 @@ namespace MinhaApi.Application.UseCases.Employees.CreateEmployee
             RuleFor(x => x.email)
                 .NotEmpty()
                 .EmailAddress();
-
-            RuleFor(x => x.password)
-                .MinimumLength(6);
         }
     }
 }
