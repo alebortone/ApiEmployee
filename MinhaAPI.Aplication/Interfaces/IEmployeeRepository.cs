@@ -8,5 +8,6 @@ namespace MinhaAPI.Aplication.Interfaces
         Task<bool> IsEmailAlreadyUse(string email, Guid? id = null);
 
         Task ConfirmedEmail(Guid id);
+
     }
 }

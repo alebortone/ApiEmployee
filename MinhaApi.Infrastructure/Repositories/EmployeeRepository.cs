@@ -1,6 +1,7 @@
-﻿using MinhaApi.Domain.employee.entitie;
+﻿using Microsoft.EntityFrameworkCore;
+using MinhaApi.Domain.employee.entitie;
 using MinhaApi.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using MinhaAPI.Aplication.Abstracoes.Filter;
 using MinhaAPI.Aplication.Interfaces;
 
 namespace MinhaApi.Infrastructure.Repositories
@@ -10,6 +11,19 @@ namespace MinhaApi.Infrastructure.Repositories
         public EmployeeRepository(ConnectionContext context) : base(context)
         {
         }
+
+        protected override List<string> OrderColumns => new()
+    {
+        "Id",
+        "Name",
+        "Email"
+    };
+
+        protected override List<FilterColumn> FilterColumns => new()
+    {
+        new FilterColumn { Column = "Name", Type = "string" },
+        new FilterColumn { Column = "Email", Type = "string" }
+    };
 
         public async Task<Employee?> GetByEmail(string email)
         {

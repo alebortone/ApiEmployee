@@ -49,9 +49,9 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
-    {
-        var result = await _getAll.Handle(new GetEmployeesQuery());
+    public async Task<IActionResult> GetAll([FromQuery] GetEmployeesQuery query)
+    { 
+        var result = await _getAll.Handle(query);
         return Ok(result);
     }
 

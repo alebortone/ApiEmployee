@@ -1,24 +1,42 @@
-﻿using MinhaApi.Domain.employee.entitie;
+﻿using MinhaAPI.Aplication.Abstracoes.Filter;
 using MinhaAPI.Aplication.DTOs;
 using MinhaAPI.Aplication.Interfaces;
+using System.Text.Json;
 
 namespace MinhaAPI.Aplication.UseCases.Employees.GetEmployees
 {
     public class GetEmployeesHandler
     {
-        private readonly IEmployeeRepository _repo;
+        private readonly IEmployeeRepository _repoEmployee;
 
         public GetEmployeesHandler(IEmployeeRepository repo)
         {
-            _repo = repo;
+            _repoEmployee = repo;
         }
 
-        public async Task<List<EmployeeResponse>> Handle(GetEmployeesQuery query)
+        public async Task<PagedResponse<EmployeeResponse>> Handle(GetEmployeesQuery query)
         {
-            var employees =  await _repo.GetAll();
+            List<FilterObject>? filters = null;
 
-            return EmployeeResponse.FromList(employees);
-        
+            if (!string.IsNullOrWhiteSpace(query.Filter))
+            {
+                filters = JsonSerializer.Deserialize<List<FilterObject>>(query.Filter);
+            }
+
+
+            var result = await _repoEmployee.GetPagined(
+                query.Page,
+                query.Limit,
+                filters,
+                query.OrderBy,
+                query.OrderDirection
+            );
+
+            return new PagedResponse<EmployeeResponse>
+            {
+                Total = result.Total,
+                Data = EmployeeResponse.FromList(result.Data)
+            };
         }
     }
 }

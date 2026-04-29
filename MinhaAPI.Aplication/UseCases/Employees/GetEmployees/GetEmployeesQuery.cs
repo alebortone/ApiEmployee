@@ -1,5 +1,10 @@
-﻿namespace MinhaAPI.Aplication.UseCases.Employees.GetEmployees
+﻿using MinhaAPI.Aplication.Abstracoes.Query;
+
+namespace MinhaAPI.Aplication.UseCases.Employees.GetEmployees
 
 {
-    public record GetEmployeesQuery();
+    public record GetEmployeesQuery: PagedQuery
+    {
+
+    }
 }

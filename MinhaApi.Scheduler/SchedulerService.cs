@@ -48,7 +48,7 @@ namespace MinhaApi.Scheduler
                     }
                 }
 
-                await Task.Delay(TimeSpan.FromMinutes(60), stoppingToken);
+                await Task.Delay(TimeSpan.FromMinutes(0.1), stoppingToken);
             }
         }
     }
