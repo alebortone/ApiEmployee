@@ -59,42 +59,13 @@ public class RepositoryGeneric<T> : IRepositoryGeneric<T> where T : class
         {
             var query = context.Set<T>().AsQueryable();
 
-            //  FILTRO (limitado aos permitidos)
-             if (filters != null && filters.Any())
-            {
-                foreach (var filter in filters)
-                {
-                    var allowed = FilterColumns
-                        .FirstOrDefault(f => f.Column.ToLower() == filter.SearchColumn.ToLower());
+            query = ApplyFilters(query, filters);
 
-                    if (allowed != null)
-                    {
-                        // versão simples (string apenas)
-                        if (allowed.Type == "string")
-                        {
-                            query = query.Where(e => EF.Property<string>(e, allowed.Column)
-                                .Contains(filter.SearchValue)
-                        );
-                    }
-                }
-            }
-        }
 
-            //  TOTAL
-            var total = await query.CountAsync();
+            query = ApplyOrdering(query, orderBy, orderDirection);
 
-            //  ORDENAÇÃO
-            if (!string.IsNullOrEmpty(orderBy) &&
-                OrderColumns.Contains(orderBy))
-            {
-                query = orderDirection == "desc"
-                    ? query.OrderByDescending(e => EF.Property<object>(e, orderBy))
-                    : query.OrderBy(e => EF.Property<object>(e, orderBy));
-            }
-            else
-            {
-                query = query.OrderBy(e => EF.Property<object>(e, "Id"));
-            }
+        //  TOTAL
+        var total = await query.CountAsync();
 
             // PAGINAÇÃO
                 var data = await query
@@ -107,8 +78,43 @@ public class RepositoryGeneric<T> : IRepositoryGeneric<T> where T : class
                 Total = total,
                 Data = data
             };
-    }
 
+
+        }
+        protected IQueryable<T> ApplyFilters(IQueryable<T> query, List<FilterObject>? filters)
+        {
+            if (filters == null || !filters.Any())
+                return query;
+
+            foreach (var filter in filters)
+            {
+                var allowed = FilterColumns
+                    .FirstOrDefault(f => f.Column.ToLower() == filter.SearchColumn.ToLower());
+                                                                       
+                if (allowed != null && allowed.Type == "string")
+                {
+                    // versão simples (string apenas)
+                    query = query.Where(e => EF.Property<string>(e, allowed.Column)
+                        .Contains(filter.SearchValue));
+                }
+            }
+
+            return query;
+        }
+
+        protected IQueryable<T> ApplyOrdering(IQueryable<T> query, string? orderBy, string? orderDirection)
+        {
+            if (!string.IsNullOrEmpty(orderBy) && OrderColumns.Contains(orderBy))
+            {
+                return orderDirection == "desc"
+                    ? query.OrderByDescending(e => EF.Property<object>(e, orderBy))
+                    : query.OrderBy(e => EF.Property<object>(e, orderBy));
+            }
+
+            // Ordenação padrão caso nenhuma seja passada
+            return query.OrderBy(e => EF.Property<object>(e, "Id"));
+        }
+   
 }
    
 
