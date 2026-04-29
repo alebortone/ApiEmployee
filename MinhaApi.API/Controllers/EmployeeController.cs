@@ -1,14 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿
 using Microsoft.AspNetCore.Mvc;
-
 using MinhaAPI.Aplication.UseCases.Employees.CreateEmployee;
 using MinhaAPI.Aplication.UseCases.Employees.DeleteEmployee;
 using MinhaAPI.Aplication.UseCases.Employees.GetEmployeeById;
 using MinhaAPI.Aplication.UseCases.Employees.GetEmployees;
 using MinhaAPI.Aplication.UseCases.Employees.GetPhotoEmployee;
 using MinhaAPI.Aplication.UseCases.Employees.UpdateEmployee;
-
-using MinhaApi.Email;
 using MinhaAPI.Aplication.UseCases.Employees.GetPdfEmployee;
 
 //[Authorize]

@@ -23,25 +23,32 @@ namespace MinhaApi.Scheduler
                 {
                     var pdfHandler = scope.ServiceProvider.GetRequiredService<GetPdfEmployeeHandler>();
                     var emailService = scope.ServiceProvider.GetRequiredService<IEmailService>();
-                    var repo = scope.ServiceProvider.GetRequiredService<IEmployeeRepository>();
+                    var repoEmployee = scope.ServiceProvider.GetRequiredService<IEmployeeRepository>();
 
-                    var employees = await repo.GetAll(); 
+                    var employees = await repoEmployee.GetAll(); 
 
                     foreach (var employee in employees)
                     {
-                        if (string.IsNullOrEmpty(employee.Photo))
+                        if (string.IsNullOrEmpty(employee.Photo) || employee.IsEmailSend)
                         {
                             continue;
                         }
                         var pdf = await pdfHandler.Handler(new GetPdfEmployeeQuery(employee.Id));
-
                         var emailModel = new EmployeeEmailModel(employee.Name, employee.Email);
 
-                        emailService.SendEmail(emailModel, pdf);
+                        try
+                        {
+                            await emailService.SendEmail(emailModel, pdf);
+                            await repoEmployee.ConfirmedEmail(employee.Id);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception($"Erro ao enviar email para {employee.Name}");
+                        }
                     }
                 }
 
-                await Task.Delay(TimeSpan.FromMinutes(0.5), stoppingToken);
+                await Task.Delay(TimeSpan.FromMinutes(60), stoppingToken);
             }
         }
     }

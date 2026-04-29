@@ -6,5 +6,7 @@ namespace MinhaAPI.Aplication.Interfaces
     {
         Task<Employee?> GetByEmail(string email);
         Task<bool> IsEmailAlreadyUse(string email, Guid? id = null);
+
+        Task ConfirmedEmail(Guid id);
     }
 }

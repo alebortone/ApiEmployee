@@ -23,6 +23,14 @@ namespace MinhaApi.Infrastructure.Repositories
            return await context.Set<Employee>().AnyAsync(x => x.Email == email && x.Id != id);
 
         }
+
+        public async Task ConfirmedEmail(Guid id)
+        {
+            var employee = await GetById(id);
+
+            employee.MarkEmailAsSent();
+            await Update(employee);
+        }
     }
 }
 

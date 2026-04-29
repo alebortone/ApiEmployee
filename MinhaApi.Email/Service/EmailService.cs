@@ -16,7 +16,7 @@ namespace MinhaApi.Email.Service
         }
 
 
-        public void SendEmail(EmployeeEmailModel emailModel, byte[] pdfBytes)
+        public async Task SendEmail(EmployeeEmailModel emailModel, byte[] pdfBytes)
         {
 
             var message = new MimeMessage();

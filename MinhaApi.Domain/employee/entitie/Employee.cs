@@ -15,6 +15,13 @@ namespace MinhaApi.Domain.employee.entitie
 
         public string Email { get; private set; }
         public string Password { get; private set; }
+        public bool IsEmailSend { get; private set; }
+
+
+        public void MarkEmailAsSent()
+        {
+            IsEmailSend = true;
+        }
 
         private void Validate(string name, int age, string email, string password)
         {
@@ -36,6 +43,7 @@ namespace MinhaApi.Domain.employee.entitie
             this.Name = name;
             this.Email = email;
             this.Age = age;
+            
         }
         public Employee(string name, int age, string photo, string email, string password )
         {
@@ -47,6 +55,7 @@ namespace MinhaApi.Domain.employee.entitie
             this.Photo = photo;
             this.Email = email;
             this.Password = password;
+            IsEmailSend = false;
 
         }
     }

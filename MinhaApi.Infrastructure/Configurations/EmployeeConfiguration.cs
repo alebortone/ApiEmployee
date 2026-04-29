@@ -33,6 +33,10 @@ namespace MinhaApi.Infrastructure.Configurations
 
             builder.Property(e => e.Password)
                 .IsRequired();
+
+            builder.Property(e => e.IsEmailSend)
+                .IsRequired()
+                .HasDefaultValue(false);
         }
     }
     

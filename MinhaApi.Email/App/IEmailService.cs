@@ -6,6 +6,6 @@ namespace MinhaApi.Email.App
 {
     public  interface IEmailService
     {
-        void SendEmail(EmployeeEmailModel emailModel, byte[] pdf);
+        Task SendEmail(EmployeeEmailModel emailModel, byte[] pdf);
     }
 }
