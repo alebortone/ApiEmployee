@@ -15,8 +15,11 @@ namespace MinhaApi.Infrastructure.Repositories
             return path;
         }
 
-        public async Task<byte[]> GetFileAsync(string path)
+        public async Task<byte[]?> GetFileAsync(string? path)
         {
+            if (path == null)
+                return null;
+
             return await File.ReadAllBytesAsync(path);
         }
     }

@@ -22,7 +22,6 @@ namespace MinhaApi.Email.Service
             var message = new MimeMessage();
 
             message.From.Add(new MailboxAddress(_settings.Name, _settings.Email));
-            Console.WriteLine($"EMAIL: '{emailModel.Email}'");
             message.To.Add(new MailboxAddress($"{emailModel.Name}", $"{emailModel.Email}"));
             message.Subject = "Seus dados cadastrados";
 

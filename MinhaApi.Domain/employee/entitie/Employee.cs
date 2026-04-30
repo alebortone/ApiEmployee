@@ -38,11 +38,15 @@ namespace MinhaApi.Domain.employee.entitie
                 throw new ArgumentException("Senha inválida");
         }
 
-        public void ToUpdate(string name, string email, int age)
+        public void ToUpdate(string name, string email, int age, string? photo)
         {
             this.Name = name;
             this.Email = email;
             this.Age = age;
+            if (!string.IsNullOrWhiteSpace(photo))
+            {
+                this.Photo = photo;
+            }
             
         }
         public Employee(string name, int age, string photo, string email, string password )

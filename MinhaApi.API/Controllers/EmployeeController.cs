@@ -74,7 +74,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update([FromBody] UpdateEmployeeCommand command, Guid id)
+    public async Task<IActionResult> Update([FromForm] UpdateEmployeeCommand command, Guid id)
     {
         var result = await _update.Handle(command, id);
         return Ok(result);
