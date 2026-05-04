@@ -69,7 +69,7 @@ public class RepositoryGeneric<T> : IRepositoryGeneric<T> where T : class
 
             // PAGINAÇÃO
                 var data = await query
-                .Skip((page - 1) * limit)
+                .Skip((page) * limit)
                 .Take(limit)
                 .ToListAsync();
 
@@ -90,12 +90,14 @@ public class RepositoryGeneric<T> : IRepositoryGeneric<T> where T : class
             {
                 var allowed = FilterColumns
                     .FirstOrDefault(f => f.Column.ToLower() == filter.SearchColumn.ToLower());
-                                                                       
+                                                                
                 if (allowed != null && allowed.Type == "string")
                 {
-                    // versão simples (string apenas)
-                    query = query.Where(e => EF.Property<string>(e, allowed.Column)
-                        .Contains(filter.SearchValue));
+                var searchTerm = filter.SearchValue.ToLower();
+
+                query = query.Where(e => EF.Property<string>(e, allowed.Column)
+                    .ToLower()
+                    .StartsWith(searchTerm));
                 }
             }
 

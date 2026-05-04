@@ -23,8 +23,8 @@ namespace MinhaApi.Pdf.Service
 
 
                     page.Header()
-                        .Text($"Hello {employee.Name}!")
-                        .SemiBold().FontSize(36);
+                        .Text($"Relatorio Funcionario: {employee.Name}!")
+                        .SemiBold().FontSize(32);
 
                     page.Content().Column(col =>
                     {

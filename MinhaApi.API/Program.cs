@@ -2,6 +2,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using MinhaApi.Email.App;
@@ -118,6 +119,14 @@ builder.Services.AddDbContext<ConnectionContext>(options =>
     options.UseNpgsql(connectionString));
 
 var app = builder.Build();
+
+app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Storage")),
+    RequestPath = "/Storage"
+});
 
 
 if (app.Environment.IsDevelopment())

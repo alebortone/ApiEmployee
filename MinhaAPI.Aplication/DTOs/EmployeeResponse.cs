@@ -9,13 +9,21 @@ public record EmployeeResponse(Guid Id, string Name, int Age, string? Photo, str
     {
         return employees.Select(e => ToResponse(e)).ToList();
     }
+
+    private static string? FormatPhoto(string? photo)
+    {
+        if (string.IsNullOrWhiteSpace(photo))
+            return null;
+
+        return "/" + photo.Replace("\\", "/");
+    }
     public static EmployeeResponse ToResponse(Employee employee)
     {
         return new EmployeeResponse(
             employee.Id,
             employee.Name,
             employee.Age,
-            employee.Photo,
+            FormatPhoto(employee.Photo),
             employee.Email
         );
     }

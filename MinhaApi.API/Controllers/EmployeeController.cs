@@ -10,7 +10,7 @@ using MinhaAPI.Aplication.UseCases.Employees.GetPdfEmployee;
 
 //[Authorize]
 [ApiController]
-[Route("api/[controller]")]
+[Route("employee")]
 public class EmployeeController : ControllerBase
 {
     private readonly CreateEmployeeHandler _create;
